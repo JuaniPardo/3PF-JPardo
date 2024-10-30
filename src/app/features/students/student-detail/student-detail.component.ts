@@ -14,7 +14,7 @@ import {CourseService} from "../../../core/services/course.service";
   styleUrls: ['./student-detail.component.scss', '../../../shared/styles/details.scss'],
 })
 export class StudentDetailComponent implements OnInit, AfterViewInit {
-  studentID!: number;
+  studentID!: string;
   student!: Student;
   enrollments!: EnrollmentDisplay[];
   isLoading: boolean = false;
@@ -32,7 +32,7 @@ export class StudentDetailComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Obtener el ID del estudiante desde la ruta.
     this.route.params.subscribe((params) => {
-      this.studentID = +params['id']; // uso el '+' para parsear
+      this.studentID = params['id'];
       this.loadStudent();
     });
   }

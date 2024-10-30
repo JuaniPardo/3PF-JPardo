@@ -93,11 +93,12 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   }
 
 // Función que llama al servicio para baja lógica del alumno.
-  deleteStudent(row: { id: number; }) {
+  deleteStudent(row: { id: string; }) {
     this.isLoading = true;
     this.studentsService.deleteStudent(row.id).subscribe({
       next: (dataAlumnos) => {
         this.dataSource.data = dataAlumnos;
+        this.loadStudents();
       },
       complete: () => {
         this.isLoading = false;
@@ -106,11 +107,12 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   }
 
 // Función que llama al servicio para actualizar el alumno.
-  private updateAlumno(id: number, result: any): void {
+  private updateAlumno(id: string, result: any): void {
     this.isLoading = true;
     this.studentsService.updateStudent(id, result).subscribe({
       next: (dataAlumnos) => {
         this.dataSource.data = dataAlumnos;
+        this.loadStudents();
       },
       complete: () => {
         this.isLoading = false;
@@ -136,7 +138,7 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     this.loadStudents();
   }
 
-  openConfirmationDialog(row: {id: number}): void {
+  openConfirmationDialog(row: {id: string}): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Eliminar alumno',

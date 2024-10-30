@@ -6,7 +6,7 @@ import {rndTime, getNextId} from "../../shared/utils";
 let ENROLLMENTS_DB: Enrollment[] = [
   {
     id: 1,
-    studentId: 1,
+    studentId: "1",
     courseId: 1,
     isActive: true,
     enrollmentDate: new Date('2023-08-15'),
@@ -14,7 +14,7 @@ let ENROLLMENTS_DB: Enrollment[] = [
   },
   {
     id: 2,
-    studentId: 2,
+    studentId: "2",
     courseId: 1,
     isActive: true,
     enrollmentDate: new Date('2023-02-01'),
@@ -22,7 +22,7 @@ let ENROLLMENTS_DB: Enrollment[] = [
   },
   {
     id: 3,
-    studentId: 3,
+    studentId: "3",
     courseId: 2,
     isActive: true,
     enrollmentDate: new Date('2023-01-22'),
@@ -30,7 +30,7 @@ let ENROLLMENTS_DB: Enrollment[] = [
   },
   {
     id: 4,
-    studentId: 4,
+    studentId: "4",
     courseId: 1,
     isActive: true,
     enrollmentDate: new Date('2023-01-28'),
@@ -51,7 +51,7 @@ export class EnrollmentService {
     return of(ENROLLMENTS_DB).pipe(delay(rndTime()));
   }
 
-  getEnrollmentsByStudentId(studentId: number): Observable<Enrollment[]> {
+  getEnrollmentsByStudentId(studentId: string): Observable<Enrollment[]> {
     const enrollments: Enrollment[] = ENROLLMENTS_DB.filter(e => e.studentId === studentId);
     return of(enrollments).pipe(delay(rndTime()));
   }
@@ -80,7 +80,7 @@ export class EnrollmentService {
     return of(ENROLLMENTS_DB).pipe(delay(rndTime(.7)));
   }
 
-  unenrollStudent(studentId: number, courseId: number): Observable<Enrollment[]> {
+  unenrollStudent(studentId: string, courseId: number): Observable<Enrollment[]> {
     const activeEnrollment: Enrollment | undefined = ENROLLMENTS_DB.find(e => e.studentId === studentId && e.courseId === courseId && e.isActive);
     if (activeEnrollment) {
       activeEnrollment.isActive = false;

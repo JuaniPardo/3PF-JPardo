@@ -9,7 +9,7 @@ import {ClassService} from "../../../core/services/class.service";
   styleUrls: ['./class-detail.component.scss', '../../../shared/styles/details.scss']
 })
 export class ClassDetailComponent {
-  classID!: number;
+  classID!: string;
   class!: Class;
   isLoading: boolean = false;
 
@@ -24,7 +24,7 @@ export class ClassDetailComponent {
   ngOnInit(): void {
     // Obtener el ID del curso desde la ruta.
     this.route.params.subscribe((params) => {
-      this.classID = +params['id']; // uso el '+' para parsear
+      this.classID = params['id'];
       this.loadClass();
     });
   }

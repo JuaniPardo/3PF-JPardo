@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import {CoursesRoutingModule} from './courses-routing.module';
 import {CourseFormComponent} from './course-form/course-form.component';
@@ -28,26 +28,27 @@ import {MatListModule} from "@angular/material/list";
     CourseListComponent,
     CourseDetailComponent
   ],
-  imports: [
-    CommonModule,
-    CoursesRoutingModule,
-    ReactiveFormsModule,
-    SharedModule,
+    imports: [
+        CommonModule,
+        CoursesRoutingModule,
+        ReactiveFormsModule,
+        SharedModule,
 
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatListModule,
-    MatButtonModule,
-    MatSlideToggleModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatCardModule
-  ]
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatChipsModule,
+        MatListModule,
+        MatButtonModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDialogModule,
+        MatCardModule,
+        NgOptimizedImage
+    ]
 })
 export class CoursesModule {
 }

@@ -14,7 +14,7 @@ import {MatSlideToggleChange} from "@angular/material/slide-toggle";
   styleUrls: ['./course-list.component.scss', '../../../shared/styles/lists.scss']
 })
 export class CourseListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'descripcion', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', "updatedAt", "acciones"];
   dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>();
   isLoading: boolean = false;
   showInactive: boolean = false;
@@ -60,7 +60,6 @@ export class CourseListComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -85,11 +84,12 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateCourse(id: number, result: any): void {
+  updateCourse(id: string, result: any): void {
     this.isLoading = true;
     this.coursesService.updateCourse(id, result).subscribe({
       next: (dataCourses) => {
         this.dataSource.data = dataCourses;
+        this.loadCourses();
       },
       complete: () => {
         this.isLoading = false;
@@ -99,9 +99,10 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
   addCourse(result: Course): void {
     this.isLoading = true;
-    this.coursesService.addCourse(result).subscribe({
+    this.coursesService.createCourse(result).subscribe({
       next: (dataCourses) => {
         this.dataSource.data = dataCourses;
+        this.loadCourses();
       },
       complete: () => {
         this.isLoading = false;
@@ -109,11 +110,12 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteCourse(row: { id: number; }) {
+  deleteCourse(row: { id: string; }) {
     this.isLoading = true;
     this.coursesService.deleteCourse(row.id).subscribe({
       next: (dataCourses) => {
         this.dataSource.data = dataCourses;
+        this.loadCourses();
       },
       complete: () => {
         this.isLoading = false;
@@ -125,4 +127,18 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     this.showInactive = $event.checked;
     this.loadCourses();
   }
+
+   activateCourse(row: { id: string; }) {
+      this.isLoading = true;
+      this.coursesService.activateCourse(row.id).subscribe({
+        next: (dataCourses) => {
+          this.dataSource.data = dataCourses;
+          this.loadCourses();
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      });
+
+   }
 }

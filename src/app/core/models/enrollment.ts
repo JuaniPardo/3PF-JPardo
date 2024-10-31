@@ -1,7 +1,7 @@
 export interface Enrollment {
-  id: number;
+  id: string;
   studentId: string;
-  courseId: number;
+  courseId: string;
   isActive: boolean;
   enrollmentDate: Date;
   updatedAt: Date;

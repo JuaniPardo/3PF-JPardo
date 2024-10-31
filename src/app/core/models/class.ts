@@ -1,8 +1,8 @@
 export interface Class {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  courseId: number;
+  courseId: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;

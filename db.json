@@ -26,7 +26,7 @@
       "email": "martin.gonzalez@gmail.com",
       "isActive": true,
       "createdAt": "2024-10-30T01:00:00.000Z",
-      "updatedAt": "2024-10-30T01:00:00.000Z"
+      "updatedAt": "2024-10-31T17:29:43.298Z"
     },
     {
       "id": "e001",
@@ -35,7 +35,7 @@
       "email": "sofia.rodriguez@gmail.com",
       "isActive": true,
       "createdAt": "2024-10-30T01:00:00.000Z",
-      "updatedAt": "2024-10-30T01:00:00.000Z"
+      "updatedAt": "2024-10-31T16:33:36.714Z"
     },
     {
       "id": "f812",
@@ -81,6 +81,92 @@
       "isActive": true,
       "createdAt": "2024-10-30T01:00:00.000Z",
       "updatedAt": "2024-10-30T01:00:00.000Z"
+    }
+  ],
+  "enrollments": [],
+  "courses": [
+    {
+      "id": "96b5",
+      "name": "Angular",
+      "description": "Desarrollo de aplicaciones Web con Angular.",
+      "imageURL": "angular.png",
+      "isActive": true,
+      "createdAt": "2024-10-30T23:49:13.408Z",
+      "updatedAt": "2024-10-31T17:17:00.885Z"
+    },
+    {
+      "id": "03b3",
+      "name": "React",
+      "description": "Desarrollo de interfaces de usuario con React.",
+      "imageURL": "react.png",
+      "isActive": true,
+      "createdAt": "2024-10-30T23:53:08.936Z",
+      "updatedAt": "2024-10-30T23:53:08.936Z"
+    },
+    {
+      "id": "ace4",
+      "name": "JavaScript",
+      "description": "Fundamentos de JavaScript.",
+      "imageURL": "js.png",
+      "isActive": true,
+      "createdAt": "2024-10-30T23:57:43.045Z",
+      "updatedAt": "2024-10-30T23:57:43.045Z"
+    },
+    {
+      "id": "688a",
+      "name": "Spring",
+      "description": "Desarrollo de aplicaciones con Spring Framework.",
+      "imageURL": "spring.png",
+      "isActive": true,
+      "createdAt": "2024-10-30T23:58:05.841Z",
+      "updatedAt": "2024-10-30T23:58:05.841Z"
+    },
+    {
+      "id": "43df",
+      "name": "Laravel",
+      "description": "Desarrollo de aplicaciones monolíticas con Laravel.",
+      "imageURL": "laravel.png",
+      "isActive": true,
+      "createdAt": "2024-10-30T23:58:29.382Z",
+      "updatedAt": "2024-10-31T17:27:00.251Z"
+    },
+    {
+      "id": "6acb",
+      "name": "TypeScript",
+      "description": "Curso inicial de TypeScript.",
+      "imageURL": "typescript.png",
+      "isActive": true,
+      "createdAt": "2024-10-31T00:54:19.002Z",
+      "updatedAt": "2024-10-31T00:54:19.002Z"
+    }
+  ],
+  "classes": [
+    {
+      "id": "3nx09idgdp5",
+      "title": "Clase 1: Introducción a Angular",
+      "description": "Angular CLI, instalación y configuración de la aplicación. EDIT",
+      "courseId": "96b5",
+      "isActive": true,
+      "createdAt": "2024-10-31T01:20:44.299Z",
+      "updatedAt": "2024-10-31T01:20:44.299Z"
+    },
+    {
+      "id": "dwmtnnteksb",
+      "title": "Clase 2: Directivas",
+      "description": "Aprende a usar las directivas de Angular.",
+      "courseId": "96b5",
+      "isActive": true,
+      "createdAt": "2024-10-31T02:10:42.514Z",
+      "updatedAt": "2024-10-31T02:10:42.514Z"
+    },
+    {
+      "id": "47bf14k1h49",
+      "title": "clse 3",
+      "description": "sarasa",
+      "courseId": "96b5",
+      "isActive": false,
+      "createdAt": "2024-10-31T02:12:53.650Z",
+      "updatedAt": "2024-10-31T02:12:53.650Z"
     }
   ]
 }

@@ -102,7 +102,7 @@ export class StudentDetailComponent implements OnInit, AfterViewInit {
 }
 
 interface EnrollmentDisplay {
-  courseId: number;
+  courseId: string;
   courseName: string;
   enrollmentDate: Date;
 }

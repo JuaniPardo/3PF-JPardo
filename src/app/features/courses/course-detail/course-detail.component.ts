@@ -9,7 +9,7 @@ import {CourseService} from "../../../core/services/course.service";
   styleUrls: ['./course-detail.component.scss', '../../../shared/styles/details.scss'],
 })
 export class CourseDetailComponent implements OnInit {
-  courseID!: number;
+  courseID!: string;
   course!: Course;
   isLoading: boolean = false;
 
@@ -23,7 +23,7 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit(): void {
     // Obtener el ID del curso desde la ruta.
     this.route.params.subscribe((params) => {
-      this.courseID = +params['id']; // uso el '+' para parsear
+      this.courseID = params['id'];
       this.loadCourse();
     });
   }

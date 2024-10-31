@@ -1,37 +1,36 @@
 import {Injectable} from '@angular/core';
 import {Enrollment} from "../models/enrollment";
 import {delay, Observable, of, throwError} from "rxjs";
-import {rndTime, getNextId} from "../../shared/utils";
 
 let ENROLLMENTS_DB: Enrollment[] = [
   {
-    id: 1,
+    id: "1",
     studentId: "1",
-    courseId: 1,
+    courseId: "1",
     isActive: true,
     enrollmentDate: new Date('2023-08-15'),
     updatedAt: new Date('2023-09-10')
   },
   {
-    id: 2,
+    id: "2",
     studentId: "2",
-    courseId: 1,
+    courseId: "1",
     isActive: true,
     enrollmentDate: new Date('2023-02-01'),
     updatedAt: new Date('2023-05-20')
   },
   {
-    id: 3,
+    id: "3",
     studentId: "3",
-    courseId: 2,
+    courseId: "2",
     isActive: true,
     enrollmentDate: new Date('2023-01-22'),
     updatedAt: new Date('2023-01-25'),
   },
   {
-    id: 4,
+    id: "4",
     studentId: "4",
-    courseId: 1,
+    courseId: "1",
     isActive: true,
     enrollmentDate: new Date('2023-01-28'),
     updatedAt: new Date('2023-01-30'),
@@ -48,17 +47,17 @@ export class EnrollmentService {
 
   getActiveEnrollments(): Observable<Enrollment[]> {
     ENROLLMENTS_DB = ENROLLMENTS_DB.filter(e => e.isActive);
-    return of(ENROLLMENTS_DB).pipe(delay(rndTime()));
+    return of(ENROLLMENTS_DB);
   }
 
   getEnrollmentsByStudentId(studentId: string): Observable<Enrollment[]> {
     const enrollments: Enrollment[] = ENROLLMENTS_DB.filter(e => e.studentId === studentId);
-    return of(enrollments).pipe(delay(rndTime()));
+    return of(enrollments);
   }
 
-  getEnrollmentsByCourseId(courseId: number): Observable<Enrollment[]> {
+  getEnrollmentsByCourseId(courseId: string): Observable<Enrollment[]> {
     const enrollments: Enrollment[] = ENROLLMENTS_DB.filter(e => e.courseId === courseId);
-    return of(enrollments).pipe(delay(rndTime()));
+    return of(enrollments);
   }
 
   enrollStudent(enrollment: Omit<Enrollment, 'id' | 'isActive' | 'enrollmentDate' | 'updatedAt'>): Observable<Enrollment[]> {
@@ -66,21 +65,20 @@ export class EnrollmentService {
     if (existingEnrollment) {
       return throwError(() => new Error('Alumno ya está inscrito en el curso'));
     }
-    const newEnrollment: Enrollment = {
-      id: getNextId(ENROLLMENTS_DB) + 1,
+    const newEnrollment: Omit<Enrollment, 'id'> = {
       courseId: enrollment.courseId,
       studentId: enrollment.studentId,
       isActive: true,
       enrollmentDate: new Date(),
       updatedAt: new Date()
     };
-    ENROLLMENTS_DB = [...ENROLLMENTS_DB, newEnrollment];
+    ENROLLMENTS_DB = [...ENROLLMENTS_DB, { ...newEnrollment, id: Math.random().toString(36).slice(2) }];
     console.table(newEnrollment);
     console.table(ENROLLMENTS_DB);
-    return of(ENROLLMENTS_DB).pipe(delay(rndTime(.7)));
+    return of(ENROLLMENTS_DB);
   }
 
-  unenrollStudent(studentId: string, courseId: number): Observable<Enrollment[]> {
+  unenrollStudent(studentId: string, courseId: string): Observable<Enrollment[]> {
     const activeEnrollment: Enrollment | undefined = ENROLLMENTS_DB.find(e => e.studentId === studentId && e.courseId === courseId && e.isActive);
     if (activeEnrollment) {
       activeEnrollment.isActive = false;
@@ -90,7 +88,7 @@ export class EnrollmentService {
           ? {...activeEnrollment, isActive: false, updatedAt: new Date()}
           : e
       )
-      return of(ENROLLMENTS_DB).pipe(delay(rndTime(.5)));
+      return of(ENROLLMENTS_DB);
     } else {
       return throwError(() => new Error('Alumno no está inscrito en el curso'));
     }

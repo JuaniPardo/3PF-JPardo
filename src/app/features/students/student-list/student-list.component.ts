@@ -18,7 +18,7 @@ import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 })
 
 export class StudentListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['apellido', 'nombre', 'email', 'actions'];
+  displayedColumns: string[] = ['apellido', 'nombre', 'email', 'updatedAt', 'actions'];
   dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student>;
   isLoading: boolean = false;
   showInactive: boolean = false;
@@ -106,6 +106,19 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  activateStudent(row: { id: string; }) {
+     this.isLoading = true;
+     this.studentsService.activateStudent(row.id).subscribe({
+        next: (dataAlumnos) => {
+           this.dataSource.data = dataAlumnos;
+           this.loadStudents();
+        },
+        complete: () => {
+           this.isLoading = false;
+        }
+     });
+  }
+
 // Función que llama al servicio para actualizar el alumno.
   private updateAlumno(id: string, result: any): void {
     this.isLoading = true;
@@ -123,7 +136,7 @@ export class StudentListComponent implements OnInit, AfterViewInit {
 // Función que llama al servicio para crear el alumno.
   private addAlumno(result: Student): void {
     this.isLoading = true;
-    this.studentsService.addStudent(result).subscribe({
+    this.studentsService.createStudent(result).subscribe({
       next: (dataAlumnos) => {
         this.dataSource.data = dataAlumnos;
       },
@@ -138,18 +151,38 @@ export class StudentListComponent implements OnInit, AfterViewInit {
     this.loadStudents();
   }
 
-  openConfirmationDialog(row: {id: string}): void {
+  openConfirmationDialog(
+     row: {id: string},
+     dialogTitle: string,
+     dialogMessage: string,
+     onConfirm: () => void
+  ): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: 'Eliminar alumno',
-        message: 'Esta acción no se puede deshacer.\n¿Está seguro de que desea eliminar alumno?',
-      },
+      data: { title: dialogTitle, message: dialogMessage },
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteStudent(row);
+        onConfirm();
       }
     });
   }
+
+  confirmDeletion(row: { id: string; }) {
+     this.openConfirmationDialog(
+        row,
+        'Eliminar alumno',
+        '¿Está seguro de que desea eliminar alumno?',
+        () => this.deleteStudent(row)
+     );
+  }
+
+   confirmActivation(row: { id: string; }) {
+      this.openConfirmationDialog(
+         row,
+         'Reactivar alumno',
+         '¿Está seguro de que desea activar alumno?',
+         () => this.activateStudent(row)
+      );
+
+   }
 }

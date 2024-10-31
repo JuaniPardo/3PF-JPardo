@@ -20,6 +20,10 @@
   color: #0099ff;
 }
 
+.restore-icon {
+  color: #25c717;
+}
+
 .spinner {
   display: flex;
   justify-content: center;

@@ -24,7 +24,7 @@ export class ClassFormComponent implements OnInit {
     this.classForm = this.fb.group({
       title: [data?.title, null],
       description: [data?.description, null],
-      course: [data?.courseId, null]
+      courseId: [data?.courseId, null]
     });
   }
 

@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import {StudentsRoutingModule} from './students-routing.module';
 import {StudentListComponent} from './student-list/student-list.component';
@@ -28,26 +28,27 @@ import {MatListModule} from "@angular/material/list";
     StudentFormComponent,
     StudentDetailComponent,
   ],
-  imports: [
-    CommonModule,
-    StudentsRoutingModule,
-    ReactiveFormsModule,
-    SharedModule,
+    imports: [
+        CommonModule,
+        StudentsRoutingModule,
+        ReactiveFormsModule,
+        SharedModule,
 
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatSlideToggleModule,
-    MatIconModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatListModule,
-  ],
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatSlideToggleModule,
+        MatIconModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatCardModule,
+        MatChipsModule,
+        MatListModule,
+        NgOptimizedImage,
+    ],
 })
 export class StudentsModule {
 }

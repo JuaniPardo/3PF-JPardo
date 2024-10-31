@@ -1,107 +1,86 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Course} from "../models/course";
-import {delay, Observable, of, throwError} from "rxjs";
-import {getNextId, rndTime} from "../../shared/utils";
+import {delay, Observable, of, throwError, map, catchError} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
-let COURSES_DB: Course[] = [
-  {
-    id: 1,
-    name: 'Angular',
-    description: 'Desarrollo de aplicaciones web con Angular.',
-    isActive: true,
-    createdAt: new Date('2023-08-15'),
-    updatedAt: new Date('2023-09-10')
-  },
-  {
-    id: 2,
-    name: 'React',
-    description: 'Desarrollo de interfaces de usuario con React.',
-    isActive: true,
-    createdAt: new Date('2023-02-01'),
-    updatedAt: new Date('2023-05-20')
-  },
-  {
-    id: 3,
-    name: 'JavaScript',
-    description: 'Fundamentos de Javascript.',
-    isActive: true,
-    createdAt: new Date('2023-01-15'),
-    updatedAt: new Date('2023-07-25')
-  },
-  {
-    id: 4,
-    name: 'Spring',
-    description: 'Desarrollo de aplicaciones con Spring Framework.',
-    isActive: true,
-    createdAt: new Date('2023-04-10'),
-    updatedAt: new Date('2023-06-08')
-  },
-  {
-    id: 5,
-    name: 'Laravel',
-    description: 'Desarrollo de aplicaciones con Laravel.',
-    isActive: true,
-    createdAt: new Date('2023-03-21'),
-    updatedAt: new Date('2023-07-03')
-  },
-]
 
 @Injectable({
-  providedIn: 'root'
+   providedIn: 'root'
 })
 export class CourseService {
 
-  constructor() { }
+   constructor(private httpClient: HttpClient) {
+   }
 
-  getActiveCourses(): Observable<Course[]> {
-    COURSES_DB = COURSES_DB.filter(c => c.isActive);
-    return of(COURSES_DB).pipe(delay(rndTime()));
-  }
+   getActiveCourses(): Observable<Course[]> {
+      return this.httpClient.get<Course[]>('http://localhost:3000/courses').pipe(
+         map((courses: Course[]) => courses.filter(c => c.isActive)),
+         catchError(error => {
+            console.error('Error al obtener los cursos activos:', error);
+            return throwError(() => new Error('No se pudieron obtener los cursos activos'));
+         })
+      );
+   }
 
-  getInactiveCourses(): Observable<Course[]> {
-    COURSES_DB = COURSES_DB.filter(c => !c.isActive);
-    return of(COURSES_DB).pipe(delay(rndTime()));
-  }
+   getInactiveCourses(): Observable<Course[]> {
+      return this.httpClient.get<Course[]>('http://localhost:3000/courses').pipe(
+         map((courses: Course[]) => courses.filter(c => !c.isActive)),
+         catchError(error => {
+            console.error('Error al obtener los cursos inactivos:', error);
+            return throwError(() => new Error('No se pudieron obtener los cursos inactivos'));
+         })
+      );
+   }
 
-  getCourseById(id: number): Observable<Course> {
-    const course: Course | undefined = COURSES_DB.find(c => c.id === id);
-    if (course) {
-      return of(course).pipe(delay(rndTime()));
-    } else {
-      return  throwError(() => new Error('Curso no encontrado'));
-    }
-  }
+   getCourseById(id: string): Observable<Course> {
+      return this.httpClient.get<Course>('http://localhost:3000/courses/' + id).pipe(
+         catchError(error => {
+            console.error('Error al obtener el curso:', error);
+            return throwError(() => new Error('Curso no encontrado'));
+         })
+      );
+   }
 
-  addCourse(result: Course): Observable<Course[]> {
-    const newCourse: Course = {
-      ...result,
-      isActive: true,
-      id: getNextId(COURSES_DB),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    COURSES_DB = [...COURSES_DB, newCourse];
-    return of(COURSES_DB).pipe(delay(rndTime(.7)));
-  }
 
-  deleteCourse(id: number): Observable<Course[]> {
-    COURSES_DB = COURSES_DB.map(c =>
-      c.id === id ? {...c, isActive: false, updatedAt: new Date()} : c
-    ).filter(c => c.isActive);
-    return of(COURSES_DB).pipe(delay(rndTime(.3)));
-  }
+   createCourse(result: Course): Observable<Course[]> {
+      const newCourse: Course = {
+         ...result,
+         isActive: true,
+         createdAt: new Date(),
+         updatedAt: new Date()
+      };
+      return this.httpClient.post<Course[]>('http://localhost:3000/courses', newCourse).pipe(
+         catchError(error => {
+            console.error('Error al crear el curso:', error);
+            return throwError(() => new Error('No se pudo crear el curso'));
+         })
+      );
+   }
 
-  updateCourse(id: number, result: Partial<Course>): Observable<Course[]> {
-    COURSES_DB = COURSES_DB.map(c =>
-      c.id === id ? {...c, ...result, updatedAt: new Date()} : c
-    ).filter(c => c.isActive);
-    return of(COURSES_DB).pipe(delay(rndTime(.5)));
-  }
+   deleteCourse(id: string): Observable<Course[]> {
+      return this.httpClient.patch<Course[]>(`http://localhost:3000/courses/${id}`, {isActive: false, updatedAt: new Date()}).pipe(
+         catchError(error => {
+            console.error('Error al eliminar el curso:', error);
+            return throwError(() => new Error('No se pudo eliminar el curso'));
+         })
+      );
+   }
 
-  activateCourse(id: number): Observable<Course[]> {
-    COURSES_DB = COURSES_DB.map(c =>
-      c.id === id ? {...c, isActive: true, updatedAt: new Date()} : c
-    ).filter(c => !c.isActive);
-    return of(COURSES_DB).pipe(delay(rndTime(.5)));
-  }
+   updateCourse(id: string, result: Partial<Course>): Observable<Course[]> {
+      return this.httpClient.patch<Course[]>(`http://localhost:3000/courses/${id}`, {... result, updatedAt: new Date()}).pipe(
+         catchError(error => {
+            console.error('Error al actualizar el curso:', error);
+            return throwError(() => new Error('No se pudo actualizar el curso'));
+         })
+      );
+   }
+
+   activateCourse(id: string): Observable<Course[]> {
+      return this.httpClient.patch<Course[]>(`http://localhost:3000/courses/${id}`, {isActive: true}).pipe(
+         catchError(error => {
+            console.error('Error al activar el curso:', error);
+            return throwError(() => new Error('No se pudo activar el curso'));
+         })
+      );
+   }
 }

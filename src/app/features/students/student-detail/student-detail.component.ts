@@ -81,9 +81,12 @@ export class StudentDetailComponent implements OnInit, AfterViewInit {
               return {
                 courseId: enrollment.courseId,
                 studentId: this.student.id,
-                courseName: course
+                courseName: course?.imageURL
                   ? course.name
                   : 'Curso no encontrado',
+                  courseImageURL: course
+                     ? course.imageURL
+                     : 'https://via.placeholder.com/150',
                 enrollmentDate: enrollment.enrollmentDate,
               };
             });
@@ -104,5 +107,6 @@ export class StudentDetailComponent implements OnInit, AfterViewInit {
 interface EnrollmentDisplay {
   courseId: string;
   courseName: string;
+  courseImageURL: string | undefined;
   enrollmentDate: Date;
 }

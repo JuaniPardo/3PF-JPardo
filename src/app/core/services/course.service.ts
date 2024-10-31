@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Course} from "../models/course";
-import {delay, Observable, of, throwError, map, catchError} from "rxjs";
+import {Observable, throwError, map, catchError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
 

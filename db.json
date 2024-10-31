@@ -26,7 +26,7 @@
       "email": "martin.gonzalez@gmail.com",
       "isActive": true,
       "createdAt": "2024-10-30T01:00:00.000Z",
-      "updatedAt": "2024-10-31T17:29:43.298Z"
+      "updatedAt": "2024-10-31T18:35:33.180Z"
     },
     {
       "id": "e001",
@@ -83,7 +83,64 @@
       "updatedAt": "2024-10-30T01:00:00.000Z"
     }
   ],
-  "enrollments": [],
+  "enrollments": [
+    {
+      "id": "ac09",
+      "courseId": "96b5",
+      "studentId": "5c60",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T18:04:15.589Z",
+      "updatedAt": "2024-10-31T18:04:15.589Z"
+    },
+    {
+      "id": "680a",
+      "courseId": "ace4",
+      "studentId": "5c60",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T18:12:22.975Z",
+      "updatedAt": "2024-10-31T18:12:22.975Z"
+    },
+    {
+      "id": "707d",
+      "courseId": "43df",
+      "studentId": "5c60",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T19:33:30.945Z",
+      "updatedAt": "2024-10-31T19:33:30.945Z"
+    },
+    {
+      "id": "0058",
+      "courseId": "03b3",
+      "studentId": "5c60",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T19:33:36.602Z",
+      "updatedAt": "2024-10-31T19:33:36.602Z"
+    },
+    {
+      "id": "b770",
+      "courseId": "688a",
+      "studentId": "5c60",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T19:33:43.219Z",
+      "updatedAt": "2024-10-31T19:33:43.219Z"
+    },
+    {
+      "id": "a3b5",
+      "courseId": "6acb",
+      "studentId": "5c60",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T19:33:50.118Z",
+      "updatedAt": "2024-10-31T19:33:50.118Z"
+    },
+    {
+      "id": "e946",
+      "courseId": "96b5",
+      "studentId": "e001",
+      "isActive": true,
+      "enrollmentDate": "2024-10-31T19:36:37.621Z",
+      "updatedAt": "2024-10-31T19:36:37.621Z"
+    }
+  ],
   "courses": [
     {
       "id": "96b5",

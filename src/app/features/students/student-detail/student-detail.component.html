@@ -22,7 +22,7 @@
                   <mat-card-title>{{ student | fullName }}</mat-card-title>
                   <mat-card-subtitle>
                      <mat-chip-listbox>
-                        <mat-chip [color]="student.isActive ? 'green' : 'red'">
+                        <mat-chip [color]="student.isActive ? 'accent' : 'warn'" selected>
                            {{ student.isActive ? 'Activo' : 'Inactivo' }}
                         </mat-chip>
                      </mat-chip-listbox>
@@ -30,43 +30,53 @@
                </div>
             </mat-card-header>
             <mat-card-content>
-               <mat-list>
-                  <mat-list-item>
+               <div class="student-info">
+                  <div class="info-item">
                      <mat-icon matListItemIcon>person</mat-icon>
-                     <span matListItemTitle>Nombre</span>
-                     <span matListItemLine>{{ student.firstName }} {{ student.lastName }}</span>
-                  </mat-list-item>
-                  <mat-list-item>
+                     <div>
+                        <strong>Nombre completo</strong>
+                        <p>{{ student.firstName }} {{ student.lastName }}</p>
+                     </div>
+                  </div>
+                  <div class="info-item">
                      <mat-icon matListItemIcon>email</mat-icon>
-                     <span matListItemTitle>Email</span>
-                     <span matListItemLine>{{ student.email }}</span>
-                  </mat-list-item>
-                  <mat-list-item>
+                     <div>
+                        <strong>Email</strong>
+                        <p>{{ student.email }}</p>
+                     </div>
+                  </div>
+                  <div class="info-item">
                      <mat-icon matListItemIcon>event</mat-icon>
-                     <span matListItemTitle>Fecha Registro</span>
-                     <span matListItemLine>{{ student.createdAt | date:'medium' }}</span>
-                  </mat-list-item>
-                  <mat-list-item>
+                     <div>
+                        <strong>Fecha de Registro</strong>
+                        <p>{{ student.createdAt | date: 'medium' }}</p>
+                     </div>
+                  </div>
+                  <div class="info-item">
                      <mat-icon matListItemIcon>update</mat-icon>
-                     <span matListItemTitle>Última Actualización</span>
-                     <span matListItemLine>{{ student.updatedAt | date:'medium' }}</span>
-                  </mat-list-item>
-               </mat-list>
-               <div>
-                  <h3>Cursos Inscritos</h3>
-                  @if (enrollments && enrollments.length > 0) {
-                     <mat-list>
-                        @for (enrollment of enrollments; track enrollment) {
-                           <mat-list-item>
-                              <span>{{ enrollment.courseName }}</span> -
-                              <span>{{ enrollment.enrollmentDate | date:'mediumDate' }}</span>
-                           </mat-list-item>
-                        }
-                     </mat-list>
-                  } @else {
-                     <p>El estudiante no está inscrito en ningún curso.</p>
-                  }
+                     <div>
+                        <strong>Fecha de Actualización</strong>
+                        <p>{{ student.updatedAt | date: 'medium' }}</p>
+                     </div>
+                  </div>
                </div>
+               <mat-divider></mat-divider>
+               <h3>Cursos Inscritos</h3>
+               @if (enrollments && enrollments.length > 0) {
+                  <div class="courses-grid">
+                     @for (enrollment of enrollments; track enrollment) {
+                        <mat-card class="course-card" [routerLink]="['/courses', enrollment.courseId]">
+                           <mat-card-header>
+                              <img mat-card-avatar ngSrc="{{ enrollment.courseImageURL }}" alt="Curso {{ enrollment.courseName }}" width="100" height="100">
+                              <mat-card-title>{{ enrollment.courseName }}</mat-card-title>
+                              <mat-card-subtitle>{{ enrollment.enrollmentDate | date:'mediumDate' }}</mat-card-subtitle>
+                           </mat-card-header>
+                        </mat-card>
+                     }
+                  </div>
+               } @else {
+                  <p>El estudiante no está inscrito en ningún curso.</p>
+               }
             </mat-card-content>
             <mat-card-actions align="end">
                <button mat-raised-button color="primary" (click)="goBack()">

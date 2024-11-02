@@ -5,6 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Class} from '../../../core/models/class';
 import {Course} from '../../../core/models/course';
 import {CourseService} from '../../../core/services/course.service';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-class-form',
@@ -19,6 +20,7 @@ export class ClassFormComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ClassFormComponent>,
     private courseService: CourseService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Class | null
   ) {
     this.classForm = this.fb.group({

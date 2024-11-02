@@ -13,30 +13,34 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {WelcomeComponent} from './components/welcome/welcome.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
-  declarations: [
-    SidenavComponent,
-    ToolbarComponent,
-    FullNamePipe,
-    ConfirmDialogComponent
-  ],
-  exports: [
-    ToolbarComponent,
-    SidenavComponent,
-    FullNamePipe
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatBadgeModule,
-    MatMenuModule,
-    MatDialogModule
-  ]
+   declarations: [
+      SidenavComponent,
+      ToolbarComponent,
+      FullNamePipe,
+      ConfirmDialogComponent,
+      WelcomeComponent
+   ],
+   exports: [
+      ToolbarComponent,
+      SidenavComponent,
+      FullNamePipe
+   ],
+   imports: [
+      CommonModule,
+      RouterModule,
+      MatListModule,
+      MatIconModule,
+      MatToolbarModule,
+      MatButtonModule,
+      MatBadgeModule,
+      MatMenuModule,
+      MatDialogModule,
+      MatCardModule
+   ]
 })
 export class SharedModule {
 }

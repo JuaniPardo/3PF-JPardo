@@ -13,6 +13,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
    selector: 'app-class-list',
@@ -34,7 +35,8 @@ export class ClassListComponent implements OnInit, AfterViewInit {
       private route: ActivatedRoute,
       private classesService: ClassService,
       private courseService: CourseService,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private snackBar: MatSnackBar
    ) {
    }
 
@@ -73,7 +75,10 @@ export class ClassListComponent implements OnInit, AfterViewInit {
                this.isLoading = false;
             },
             error: (err) => {
-               console.error(err);
+               this.snackBar.open('Error al cargar las clases', 'Cerrar', {
+                  duration: 3000,
+               });
+               console.error('Error al cargar las clases inactivas:', err);
                this.isLoading = false;
             },
          });
@@ -86,7 +91,10 @@ export class ClassListComponent implements OnInit, AfterViewInit {
                this.isLoading = false;
             },
             error: (err) => {
-               console.error(err);
+               this.snackBar.open('Error al cargar las clases', 'Cerrar', {
+                  duration: 3000,
+               });
+               console.error('Error al cargar las clases activas:', err);
                this.isLoading = false;
             },
          });
@@ -113,8 +121,14 @@ export class ClassListComponent implements OnInit, AfterViewInit {
             if (!!result) {
                if (c) {
                   this.updateClass(c.id, result);
+                  this.snackBar.open('Clase actualizada', 'Cerrar', {
+                     duration: 3000,
+                  });
                } else {
                   this.createClass(result);
+                  this.snackBar.open('Clase creada', 'Cerrar', {
+                     duration: 3000,
+                  });
                }
             }
          }
@@ -153,6 +167,9 @@ export class ClassListComponent implements OnInit, AfterViewInit {
          next: (dataClasses) => {
             this.mapCoursesNames(dataClasses);
             this.loadCourses();
+            this.snackBar.open('Clase eliminada', 'Cerrar', {
+               duration: 3000,
+            });
          },
          complete: () => {
             this.isLoading = false;

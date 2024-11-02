@@ -1,21 +1,31 @@
 {
   "users": [
     {
-      "id": "1",
-      "firstName": "Juan",
-      "lastName": "Pardo",
-      "email": "juani.pardo@icloud.com",
-      "password": "1234",
-      "isActive": true,
-      "createdAt": "2023-08-15T00:00:00.000Z",
-      "updatedAt": "2023-09-10T00:00:00.000Z"
-    },
-    {
       "id": "eed1",
       "firstName": "Admin",
       "lastName": "Admin EDIT",
       "email": "admin@admin.com",
       "password": "admin"
+    },
+    {
+      "id": "ec97",
+      "firstName": "Juan",
+      "lastName": "Pardo",
+      "email": "juani.pardo@icloud.com",
+      "password": "1234",
+      "isActive": true,
+      "createdAt": "2024-11-01T18:31:50.826Z",
+      "updatedAt": "2024-11-01T18:31:50.826Z"
+    },
+    {
+      "id": "8798",
+      "firstName": "Pepe",
+      "lastName": "Lopez",
+      "email": "pepelopez@amil.com",
+      "password": "1234",
+      "isActive": true,
+      "createdAt": "2024-11-02T12:04:24.635Z",
+      "updatedAt": "2024-11-02T12:04:24.635Z"
     }
   ],
   "students": [
@@ -81,6 +91,15 @@
       "isActive": true,
       "createdAt": "2024-10-30T01:00:00.000Z",
       "updatedAt": "2024-10-30T01:00:00.000Z"
+    },
+    {
+      "id": "87b3",
+      "firstName": "Luis",
+      "lastName": "Salinas",
+      "email": "luissalinas@gmail.com",
+      "isActive": false,
+      "createdAt": "2024-11-02T13:18:52.926Z",
+      "updatedAt": "2024-11-02T13:19:43.207Z"
     }
   ],
   "enrollments": [

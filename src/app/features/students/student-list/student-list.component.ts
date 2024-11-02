@@ -10,6 +10,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-student-list',
@@ -29,7 +30,9 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   // Constructor
   constructor(
     private studentsService: StudentsService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
   }
 
   ngOnInit(): void {
@@ -84,8 +87,14 @@ export class StudentListComponent implements OnInit, AfterViewInit {
         if (!!result) {
           if (s) {
             this.updateAlumno(s.id, result);
+            this.snackBar.open('Alumno actualizado', 'Cerrar', {
+              duration: 3000,
+            });
           } else {
             this.addAlumno(result);
+            this.snackBar.open('Alumno creado', 'Cerrar', {
+              duration: 3000,
+            });
           }
         }
       }
@@ -102,6 +111,9 @@ export class StudentListComponent implements OnInit, AfterViewInit {
       },
       complete: () => {
         this.isLoading = false;
+        this.snackBar.open('Alumno eliminado', 'Cerrar', {
+          duration: 3000,
+        });
       }
     });
   }
@@ -115,6 +127,9 @@ export class StudentListComponent implements OnInit, AfterViewInit {
         },
         complete: () => {
            this.isLoading = false;
+           this.snackBar.open('Alumno activado', 'Cerrar', {
+              duration: 3000,
+           });
         }
      });
   }

@@ -7,6 +7,7 @@ import {CourseService} from "../../../core/services/course.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CourseFormComponent} from "../course-form/course-form.component";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-course-list',
@@ -24,7 +25,9 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private coursesService: CourseService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
   }
 
   ngOnInit(): void {
@@ -76,8 +79,14 @@ export class CourseListComponent implements OnInit, AfterViewInit {
         if (!!result) {
           if (c) {
             this.updateCourse(c.id, result);
+            this.snackBar.open('Curso actualizado', 'Cerrar', {
+              duration: 3000,
+            });
           } else {
             this.addCourse(result);
+            this.snackBar.open('Curso creado', 'Cerrar', {
+              duration: 3000,
+            });
           }
         }
       }
@@ -116,6 +125,9 @@ export class CourseListComponent implements OnInit, AfterViewInit {
       next: (dataCourses) => {
         this.dataSource.data = dataCourses;
         this.loadCourses();
+        this.snackBar.open('Curso eliminado', 'Cerrar', {
+          duration: 3000,
+        });
       },
       complete: () => {
         this.isLoading = false;
@@ -137,6 +149,9 @@ export class CourseListComponent implements OnInit, AfterViewInit {
         },
         complete: () => {
           this.isLoading = false;
+          this.snackBar.open('Curso activado', 'Cerrar', {
+            duration: 3000,
+          });
         }
       });
 

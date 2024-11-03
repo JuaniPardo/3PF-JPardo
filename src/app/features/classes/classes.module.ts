@@ -24,30 +24,30 @@ import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
-  declarations: [
-    ClassListComponent,
-    ClassFormComponent,
-    ClassDetailComponent
-  ],
-  imports: [
-    CommonModule,
-    ClassesRoutingModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatSlideToggleModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatCardModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatListModule
-  ]
+   declarations: [
+      ClassListComponent,
+      ClassFormComponent,
+      ClassDetailComponent
+   ],
+   imports: [
+      CommonModule,
+      ClassesRoutingModule,
+      MatProgressSpinnerModule,
+      MatButtonModule,
+      MatSlideToggleModule,
+      MatFormFieldModule,
+      MatTableModule,
+      MatIconModule,
+      MatPaginatorModule,
+      MatSortModule,
+      MatDialogModule,
+      MatCardModule,
+      MatInputModule,
+      ReactiveFormsModule,
+      MatSelectModule,
+      MatChipsModule,
+      MatListModule
+   ]
 })
 export class ClassesModule {
 }

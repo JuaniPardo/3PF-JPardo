@@ -27,4 +27,8 @@ mat-card-header {
   gap: 1rem;
 }
 
+mat-card-title {
+  color: #ffffff;
+}
+
 /*# sourceMappingURL=form.css.map */

@@ -16,4 +16,12 @@ mat-card {
   padding: 32px;
 }
 
+h1 {
+  color: #0acecc;
+}
+
+p {
+  color: #ffffff;
+}
+
 /*# sourceMappingURL=welcome.component.css.map */

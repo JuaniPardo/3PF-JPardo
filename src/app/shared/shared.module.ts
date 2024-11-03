@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SidenavComponent} from './components/sidenav/sidenav.component';
-import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {FullNamePipe} from './pipes/full-name.pipe';
 import {RouterModule} from '@angular/router';
+
+import {ToolbarComponent} from './components/toolbar/toolbar.component';
+import {SidenavComponent} from './components/sidenav/sidenav.component';
 
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,16 +19,17 @@ import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
    declarations: [
-      SidenavComponent,
-      ToolbarComponent,
       FullNamePipe,
       ConfirmDialogComponent,
-      WelcomeComponent
+      WelcomeComponent,
+      ToolbarComponent,
+      SidenavComponent
    ],
    exports: [
-      ToolbarComponent,
+      FullNamePipe,
       SidenavComponent,
-      FullNamePipe
+      ToolbarComponent,
+      ConfirmDialogComponent,
    ],
    imports: [
       CommonModule,

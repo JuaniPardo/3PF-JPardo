@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = '2PF-JPardo';
+  title = '3PF-JPardo';
 }

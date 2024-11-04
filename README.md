@@ -1,4 +1,4 @@
-# 2PFPardo
+# 3PFPardo
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
 
@@ -36,3 +36,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - [x] Modularización de la aplicación.
 - [x] Servicios para Estudiantes, Clases, Cursos.
 - [ ] etc...
+
+# Tercera Entrega
+
+## Aspectos a incluir en el entregable
+
+- [x] Auth Service.
+- [x] Auth Guard.
+- [ ] Service test.
+- [ ] Component test.

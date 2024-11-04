@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
                     this.snackBar.open('Sesión iniciada con éxito', 'Cerrar', {
                         duration: 3000,
                     });
-                    this.router.navigateByUrl(this.returnUrl).then();
+                    this.router.navigateByUrl(this.returnUrl);
                 } else {
                     this.snackBar.open('Credenciales incorrectas', 'Cerrar', {
                         duration: 3000,

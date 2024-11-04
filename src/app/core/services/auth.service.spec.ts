@@ -20,13 +20,14 @@ const mockAuthData: User = {
 
 }
 
-fdescribe('AuthService', () => {
+describe('AuthService', () => {
 
    let service: AuthService;
    let httpController: HttpTestingController;
    let router: Router;
 
    beforeEach(() => {
+      // Configurar el MockProvider de Router
       TestBed.configureTestingModule({
          imports: [HttpClientTestingModule],
          providers: [AuthService,
@@ -37,6 +38,7 @@ fdescribe('AuthService', () => {
             })]
       })
 
+      // Obtener los servicios
       service = TestBed.inject(AuthService);
       httpController = TestBed.inject(HttpTestingController);
       router = TestBed.inject(Router);
@@ -44,42 +46,52 @@ fdescribe('AuthService', () => {
    });
 
    afterEach(() => {
+      // Verificar que el HttpController se ha cerrado
       httpController.verify();
-      localStorage.clear();
+      localStorage.clear(); // Borrar el localStorage
    });
 
+   // Testeo de la clase AuthService
    it('should be defined', () => {
       expect(service).toBeTruthy();
    });
 
+   // Testeo de la funcionalidad de login
    it('should login', fakeAsync(() => {
       service.login(mockAuthData.email, mockAuthData.password).subscribe({
+         // Verificar que se ha enviado el usuario correctamente
          next: (user) => {
             expect(user).toEqual(mockAuthData);
+            // Verificar que el token se ha guardado en el localStorage
             expect(localStorage.getItem('token')).toEqual(mockAuthData.token);
          },
       });
 
+      // Verificar que se ha llamado correctamente al servicio de usuarios
       const mockRequest = httpController.expectOne({
          url: `${environment.USERS_URL}?email=${mockAuthData.email}&password=${mockAuthData.password}`,
          method: 'GET',
       });
       expect(mockRequest.request.method).toBe('GET');
       mockRequest.flush([mockAuthData]);
-      tick();
+      tick(); // Simular el paso del tiempo para completar la suscripción
    }));
 
+   // Testeo de la funcionalidad de login con error
    it('should not login', fakeAsync(() => {
       service.login(mockAuthData.email, mockAuthData.password).subscribe({
          next: (user) => {
+            // Verificar que el usuario es nulo
             expect(user).toBeNull();
          },
          error: (error) => {
+            // Verificar que el error es el esperado
             expect(error.message).toBe('No se pudo iniciar sesión');
 
          },
       });
 
+      // Verificar que se ha llamado correctamente al servicio de usuarios
       const mockRequest = httpController.expectOne({
          url: `${environment.USERS_URL}?email=${mockAuthData.email}&password=${mockAuthData.password}`,
          method: 'GET',
@@ -89,11 +101,14 @@ fdescribe('AuthService', () => {
       tick();
    }));
 
+   // Testeo de la funcionalidad de logout
    it('should logout', fakeAsync(() => {
+      // Configurar el spy de la función de navegación
       const spyOnNavigate = spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
 
       service.login(mockAuthData.email, mockAuthData.password).subscribe();
 
+      // Verificar que se ha llamado correctamente al servicio de usuarios
       const mockRequest = httpController.expectOne({
          url: `${environment.USERS_URL}?email=${mockAuthData.email}&password=${mockAuthData.password}`,
       });
@@ -101,6 +116,7 @@ fdescribe('AuthService', () => {
 
       service.logout();
       tick();
+      // Verificar que el token se ha borrado del localStorage
       expect(localStorage.getItem('token')).toBeNull();
       service.authUser$.subscribe({
          next: (user) => {
@@ -108,19 +124,23 @@ fdescribe('AuthService', () => {
          },
       });
 
+      // Verificar que se ha llamado correctamente a la función de navegación
       expect(spyOnNavigate).toHaveBeenCalledWith(['/welcome']);
    }));
 
+   // Testeo de la funcionalidad de registro de usuario
    it('should register a new user', fakeAsync(() => {
       service.register(mockAuthData).subscribe(user => {
          expect(user).toEqual(mockAuthData);
       });
 
+      // Verificar que se ha llamado correctamente al servicio de usuarios
       const mockRequest = httpController.expectOne({
          url: `${environment.USERS_URL}`,
          method: 'POST'
       });
 
+      // Verificar que se ha enviado el usuario correctamente
       expect(mockRequest.request.method).toBe('POST');
       expect(mockRequest.request.body).toEqual(mockAuthData);
 
@@ -128,13 +148,14 @@ fdescribe('AuthService', () => {
       tick();
    }));
 
+   // Testeo de la funcionalidad de registro de usuario con error
    it('should handle error on register', fakeAsync(() => {
       service.register(mockAuthData).subscribe({
          next: () =>{
-            fail('No se debería haber producido ningún error');
+            fail('No se debería haber producido ningún error'); // No debería haber producido ningún error
          },
          error: (error) => {
-            expect(error.message).toBe('No se pudo registrar el usuario');
+            expect(error.message).toBe('No se pudo registrar el usuario'); // El error debería ser el esperado
          }
       });
 

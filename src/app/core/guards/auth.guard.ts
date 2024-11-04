@@ -12,8 +12,18 @@ export const authGuard: CanActivateFn = (
    const router = inject(Router);
    const snackBar = inject(MatSnackBar);
 
-   return authService.authUser$.pipe(
-      map((user) => {
+   return authService.verifyToken().pipe(
+      map((isValid) => {
+         if (isValid) {
+            return true;
+         } else {
+            snackBar.open('Inicie sesión para continuar', 'Cerrar', {
+               duration: 3000,
+            });
+            return router.createUrlTree(['/login'], {queryParams: {returnUrl: state.url}});
+         }
+      }),
+      /*map((user) => {
          if (!!user) {
             return true;
          } else {
@@ -22,6 +32,6 @@ export const authGuard: CanActivateFn = (
             });
             return router.createUrlTree(['/login'], {queryParams: {returnUrl: state.url}});
          }
-      })
+      })*/
    );
 };

@@ -1,17 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
-root {
-  box-sizing: border-box;
-}
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 2 | @use '@angular/material' as mat;
+ *   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   styles.scss 2:1  root stylesheet */
 
-html, body {
-  height: 100%;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 2 \2502  @use '@angular/material' as mat;\a   \2502  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   styles.scss 2:1  root stylesheet";
 }
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  min-height: 100%;
-  background-color: #101414;
-}
-
-/*# sourceMappingURL=styles.css.map */

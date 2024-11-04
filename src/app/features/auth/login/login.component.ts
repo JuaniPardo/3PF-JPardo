@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {User} from "../../../core/models/user";
 
 @Component({
     selector: 'app-login',
@@ -36,8 +37,8 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        const email = this.loginForm.get('email')?.value;
-        const password = this.loginForm.get('password')?.value;
+        const email: User['email'] = this.loginForm.get('email')?.value;
+        const password: User['password'] = this.loginForm.get('password')?.value;
 
         this.authService.login(email, password).subscribe({
             next: (user) => {

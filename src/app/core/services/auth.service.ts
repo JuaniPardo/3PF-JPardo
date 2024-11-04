@@ -3,20 +3,23 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, throwError, BehaviorSubject, of} from "rxjs";
 import {catchError, map, tap} from "rxjs/operators";
 import {User} from "../models/user";
+import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Injectable({
    providedIn: 'root'
 })
 export class AuthService {
-   private apiUrl = 'http://localhost:3000/users';
+   private usersUrl = environment.USERS_URL;
    private _authUser$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
    public readonly authUser$: Observable<User | null> = this._authUser$.asObservable();
 
-   constructor(private httpClient: HttpClient) {}
+   constructor(private httpClient: HttpClient, private router: Router) {
+   }
 
    register(user: Omit<User, 'id'>): Observable<User> {
       return this.httpClient
-         .post<User>(this.apiUrl, user)
+         .post<User>(this.usersUrl, user)
          .pipe(
             tap((newUser: User) => {
                this._authUser$.next(newUser);
@@ -29,7 +32,7 @@ export class AuthService {
 
    login(email: string, password: string): Observable<User | null> {
       return this.httpClient
-         .get<User[]>(`${this.apiUrl}`, {params: {email, password}})
+         .get<User[]>(`${this.usersUrl}`, {params: {email, password}})
          .pipe(
             map((users: User[]) => {
                if (!!users[0]) {
@@ -42,7 +45,7 @@ export class AuthService {
                }
             }),
             catchError((error) => {
-               return throwError(() => new Error(`No se pudo iniciar sesión: ${error.message}`));
+               return  throwError(() => new Error(`No se pudo iniciar sesión`));
             })
          );
    }
@@ -50,11 +53,12 @@ export class AuthService {
    logout(): void {
       this._authUser$.next(null);
       localStorage.removeItem('token');
+      this.router.navigate(['/welcome']);
    }
 
    verifyToken(): Observable<boolean> {
       const usertoken = localStorage.getItem('token');
-      return this.httpClient.get<User[]>(`${this.apiUrl}?token=${usertoken}`).pipe(
+      return this.httpClient.get<User[]>(`${this.usersUrl}?token=${usertoken}`).pipe(
          map((users: User[]) => {
 
             if (!!users[0]) {
@@ -64,17 +68,9 @@ export class AuthService {
             return false;
          }),
          catchError((error) => {
-            return throwError(() => new Error(`No se pudo iniciar sesión: ${error.message}`));
+            throw throwError(() => new Error(`No se pudo iniciar sesión: ${error.message()}`));
          })
       );
-
-      // const isValid = localStorage.getItem('token') === this.authUser.token;
-      // if (isValid) {
-      //    this._authUser.next(this.authUser);
-      // } else {
-      //    this._authUser.next(null);
-      // }
-      // return of(isValid);
    }
 
 }

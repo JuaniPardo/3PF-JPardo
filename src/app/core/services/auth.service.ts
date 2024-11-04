@@ -58,9 +58,11 @@ export class AuthService {
 
    verifyToken(): Observable<boolean> {
       const usertoken = localStorage.getItem('token');
+      if (!usertoken) {
+         return of(false);
+      }
       return this.httpClient.get<User[]>(`${this.usersUrl}?token=${usertoken}`).pipe(
          map((users: User[]) => {
-
             if (!!users[0]) {
                this._authUser$.next(users[0]);
                return true;
@@ -68,7 +70,7 @@ export class AuthService {
             return false;
          }),
          catchError((error) => {
-            throw throwError(() => new Error(`No se pudo iniciar sesión: ${error.message()}`));
+            return of(false);
          })
       );
    }

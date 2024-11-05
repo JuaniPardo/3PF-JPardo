@@ -2,16 +2,19 @@ import {Injectable} from '@angular/core';
 import {catchError, delay, map, Observable, of, throwError} from "rxjs";
 import {Class} from "../models/class";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
    providedIn: 'root'
 })
 export class ClassService {
+   private apiUrl = environment.API_URL;
+
    constructor(private httpClient: HttpClient) {
    }
 
    getActiveClasses(courseID: string): Observable<Class[]> {
-      return this.httpClient.get<Class[]>('http://localhost:3000/classes').pipe(
+      return this.httpClient.get<Class[]>(`${this.apiUrl}/classes`).pipe(
          map((classes: Class[]) => classes.filter(c => c.isActive)),
          catchError(error => {
             console.error('Error al obtener las clases activas:', error);
@@ -21,7 +24,7 @@ export class ClassService {
    }
 
    getInactiveClasses(courseID: string): Observable<Class[]> {
-      return this.httpClient.get<Class[]>('http://localhost:3000/classes').pipe(
+      return this.httpClient.get<Class[]>(`${this.apiUrl}/classes`).pipe(
          map((classes: Class[]) => classes.filter(c => !c.isActive)),
          catchError(error => {
             console.error('Error al obtener las clases inactivas:', error);
@@ -31,7 +34,7 @@ export class ClassService {
    }
 
    getClassById(id: string): Observable<Class> {
-      return this.httpClient.get<Class>(`http://localhost:3000/classes/${id}`).pipe(
+      return this.httpClient.get<Class>(`${this.apiUrl}/classes/${id}`).pipe(
          catchError(error => {
             console.error('Error al obtener la clase:', error);
             return throwError(() => new Error('Clase no encontrada'));
@@ -47,7 +50,7 @@ export class ClassService {
          createdAt: new Date(),
          updatedAt: new Date()
       };
-      return this.httpClient.post<Class[]>('http://localhost:3000/classes', newClass).pipe(
+      return this.httpClient.post<Class[]>(`${this.apiUrl}/classes`, newClass).pipe(
          catchError(error => {
             console.error('Error al crear la clase:', error);
             return throwError(() => new Error('No se pudo crear la clase'));
@@ -56,7 +59,7 @@ export class ClassService {
    }
 
    deleteClass(id: string): Observable<Class[]> {
-      return this.httpClient.patch<Class[]>(`http://localhost:3000/classes/${id}`, {isActive: false}).pipe(
+      return this.httpClient.patch<Class[]>(`${this.apiUrl}/classes/${id}`, {isActive: false}).pipe(
          catchError(error => {
             console.error('Error al eliminar la clase:', error);
             return throwError(() => new Error('No se pudo eliminar la clase'));
@@ -65,7 +68,7 @@ export class ClassService {
    }
 
    updateClass(id: string, result: Partial<Class>): Observable<Class[]> {
-      return this.httpClient.patch<Class[]>(`http://localhost:3000/classes/${id}`, result).pipe(
+      return this.httpClient.patch<Class[]>(`${this.apiUrl}/classes/${id}`, result).pipe(
          catchError(error => {
             console.error('Error al actualizar la clase:', error);
             return throwError(() => new Error('No se pudo actualizar la clase'));
@@ -74,7 +77,7 @@ export class ClassService {
    }
 
    activateClass(id: string): Observable<Class[]> {
-      return this.httpClient.patch<Class[]>(`http://localhost:3000/classes/${id}`, {isActive: true}).pipe(
+      return this.httpClient.patch<Class[]>(`${this.apiUrl}/classes/${id}`, {isActive: true}).pipe(
          catchError(error => {
             console.error('Error al activar la clase:', error);
             return throwError(() => new Error('No se pudo activar la clase'));
@@ -83,7 +86,7 @@ export class ClassService {
    }
 
    getClassesByCourseId(courseId: string): Observable<Class[]> {
-      return this.httpClient.get<Class[]>('http://localhost:3000/classes').pipe(
+      return this.httpClient.get<Class[]>(`${this.apiUrl}/classes`).pipe(
          map((classes: Class[]) => classes.filter(c => c.courseId === courseId)),
          catchError(error => {
             console.error('Error al obtener las clases del curso:', error);

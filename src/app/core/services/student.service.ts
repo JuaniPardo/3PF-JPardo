@@ -67,7 +67,6 @@ export class StudentsService {
       return this.httpClient.get<Student[]>(`http://localhost:3000/students`).pipe(
          map((students: Student[]) => students.filter(s => !s.isActive)),
          catchError(error => {
-            console.error('Error al obtener los alumnos inactivos:', error);
             return throwError(() => new Error('No se pudieron obtener los alumnos inactivos'));
          })
       );
@@ -76,7 +75,6 @@ export class StudentsService {
    getStudentById(id: string): Observable<Student> {
       return this.httpClient.get<Student>(`http://localhost:3000/students/${id}`).pipe(
          catchError(error => {
-            console.error('Error al obtener el alumno:', error);
             return throwError(() => new Error('Alumno no encontrado'));
          })
       );

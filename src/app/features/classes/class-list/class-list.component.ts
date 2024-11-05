@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute,} from "@angular/router";
+import {ActivatedRoute, Params,} from "@angular/router";
 
 import {Class} from '../../../core/models/class';
 import {ClassFormComponent} from '../class-form/class-form.component';
@@ -46,35 +46,35 @@ export class ClassListComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit(): void {
-      this.route.params.subscribe((params) => {
+      this.route.params.subscribe((params: Params): void => {
          this.courseID = params['id'];
          this.loadCourses(this.courseID);     // <-- Me aseguro de obtener primero los Cursos.
       });
    }
 
-   private loadCourses(id?: string) {
+   private loadCourses(id?: string): void {
       this.courseService.getActiveCourses().subscribe({
-         next: (courses) => {
+         next: (courses: Course[]): void => {
             this.courses = courses;
             this.loadClasses()    // <-- Al terminar de cargar los Cursos, cargo las Clases.
          },
-         error: (err) => {
+         error: (err): void => {
             console.error(err);
          },
       });
    }
 
-   private loadClasses() {
+   private loadClasses(): void {
       this.isLoading = true;
       if (this.showInactive) {
          this.classesService.getInactiveClasses(this.courseID).subscribe({
-            next: (classes) => {
+            next: (classes: Class[]): void => {
                this.mapCoursesNames(classes);    // <-- Mapea los nombres de los cursos.
                this.dataSource.paginator = this.paginator;
                this.dataSource.sort = this.sort;
                this.isLoading = false;
             },
-            error: (err) => {
+            error: (err): void => {
                this.snackBar.open('Error al cargar las clases', 'Cerrar', {
                   duration: 3000,
                });
@@ -84,13 +84,13 @@ export class ClassListComponent implements OnInit, AfterViewInit {
          });
       } else {
          this.classesService.getActiveClasses(this.courseID).subscribe({
-            next: (classes) => {
+            next: (classes: Class[]): void => {
                this.mapCoursesNames(classes);    // <-- Mapea los nombres de los cursos.
                this.dataSource.paginator = this.paginator;
                this.dataSource.sort = this.sort;
                this.isLoading = false;
             },
-            error: (err) => {
+            error: (err): void => {
                this.snackBar.open('Error al cargar las clases', 'Cerrar', {
                   duration: 3000,
                });
@@ -102,7 +102,7 @@ export class ClassListComponent implements OnInit, AfterViewInit {
    }
 
    applyFilter(event: Event): void {
-      const filterValue = (event.target as HTMLInputElement).value;
+      const filterValue: string = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
 
       if (this.dataSource.paginator) {
@@ -138,11 +138,11 @@ export class ClassListComponent implements OnInit, AfterViewInit {
    updateClass(id: string, result: any): void {
       this.isLoading = true;
       this.classesService.updateClass(id, result).subscribe({
-         next: (dataClasses) => {
+         next: (dataClasses: Class[]): void => {
             this.mapCoursesNames(dataClasses);    // <-- Mapea los nombres de los cursos
             this.loadCourses();
          },
-         complete: () => {
+         complete: (): void => {
             this.isLoading = false;
          }
       });
@@ -151,11 +151,11 @@ export class ClassListComponent implements OnInit, AfterViewInit {
    createClass(result: Class): void {
       this.isLoading = true;
       this.classesService.createClass(result).subscribe({
-         next: (dataClasses) => {
+         next: (dataClasses: Class[]): void => {
             this.mapCoursesNames(dataClasses);
             this.loadCourses();
          },
-         complete: () => {
+         complete: (): void => {
             this.isLoading = false;
          }
       });
@@ -164,14 +164,14 @@ export class ClassListComponent implements OnInit, AfterViewInit {
    deleteClass(row: { id: string; }): void {
       this.isLoading = true;
       this.classesService.deleteClass(row.id).subscribe({
-         next: (dataClasses) => {
+         next: (dataClasses: Class[]): void => {
             this.mapCoursesNames(dataClasses);
             this.loadCourses();
             this.snackBar.open('Clase eliminada', 'Cerrar', {
                duration: 3000,
             });
          },
-         complete: () => {
+         complete: (): void => {
             this.isLoading = false;
          }
       });
@@ -184,12 +184,12 @@ export class ClassListComponent implements OnInit, AfterViewInit {
 
    mapCoursesNames(classes: Class[]): void {
       const courseMap = new Map<string, string>();
-      this.courses.forEach(course => {
+      this.courses.forEach((course: Course): void => {
          courseMap.set(course.id, course.name);
       });
-      this.dataSource.data = classes.map((classItem): Class => {
-         const courseId = classItem.courseId;
-         const courseName = courseMap.get(courseId) || 'Sin Curso';
+      this.dataSource.data = classes.map((classItem: Class): Class => {
+         const courseId: string = classItem.courseId;
+         const courseName: string = courseMap.get(courseId) || 'Sin Curso';
          return {
             ...classItem,
             courseName: courseName

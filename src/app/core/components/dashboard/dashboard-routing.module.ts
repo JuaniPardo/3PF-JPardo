@@ -26,6 +26,11 @@ const routes: Routes = [
                import('../../../features/classes/classes.module').then(m => m.ClassesModule)
          },
          {
+            path: 'users',
+            loadChildren: () =>
+               import('../../../features/users/users.module').then(m => m.UsersModule)
+         },
+         {
             path: '',
             redirectTo: 'students',
             pathMatch: 'full'

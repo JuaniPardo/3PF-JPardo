@@ -75,4 +75,7 @@ export class AuthService {
       );
    }
 
+   getCurrentUser(): User | null {
+      return this._authUser$.value;
+   }
 }

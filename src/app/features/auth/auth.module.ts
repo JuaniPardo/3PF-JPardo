@@ -16,6 +16,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatTooltip} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -23,21 +24,22 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
       LoginComponent,
       RegisterComponent
    ],
-   imports: [
-      CommonModule,
-      FormsModule,
-      RouterModule,
-      ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        ReactiveFormsModule,
 
-      MatButtonModule,
-      MatCardModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatProgressSpinnerModule,
-      MatIconModule,
-      MatDividerModule,
-      MatSnackBarModule
-   ]
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatDividerModule,
+        MatSnackBarModule,
+        MatTooltip
+    ]
 })
 export class AuthModule {
 }

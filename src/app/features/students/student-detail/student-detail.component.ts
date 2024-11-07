@@ -13,7 +13,7 @@ import {CourseService} from "../../../core/services/course.service";
   templateUrl: './student-detail.component.html',
   styleUrls: ['./student-detail.component.scss', '../../../shared/styles/details.scss'],
 })
-export class StudentDetailComponent implements OnInit, AfterViewInit {
+export class StudentDetailComponent implements OnInit {
   studentID!: string;
   student!: Student;
   enrollments!: EnrollmentDisplay[];
@@ -34,11 +34,8 @@ export class StudentDetailComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe((params) => {
       this.studentID = params['id'];
       this.loadStudent();
+      this.loadEnrollments();
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.loadEnrollments();
   }
 
   private loadStudent(): void {
@@ -57,7 +54,7 @@ export class StudentDetailComponent implements OnInit, AfterViewInit {
 
   goBack(): void {
     // Redireccionar al listado de estudiantes.
-    this.router.navigate(['/students']).then();
+    this.router.navigate(['/students']);
   }
 
   openEnrollmentForm(): void {

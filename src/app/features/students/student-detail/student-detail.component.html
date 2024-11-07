@@ -65,7 +65,8 @@
                @if (enrollments && enrollments.length > 0) {
                   <div class="courses-grid">
                      @for (enrollment of enrollments; track enrollment) {
-                        <mat-card class="course-card" [routerLink]="['/courses', enrollment.courseId]">
+                        <mat-card class="course-card" [routerLink]="['/dashboard/courses', enrollment.courseId]">
+                           <p>/courses/{{ enrollment.courseId }}</p>
                            <mat-card-header>
                               <img mat-card-avatar ngSrc="{{ enrollment.courseImageURL }}" alt="Curso {{ enrollment.courseName }}" width="100" height="100">
                               <mat-card-title>{{ enrollment.courseName }}</mat-card-title>

@@ -3,11 +3,10 @@
   width: 100%;
 }
 
-.actions {
+/*.actions {
   display: flex;
   justify-content: space-between;
-}
-
+}*/
 .delete-icon {
   color: #cc1122;
 }

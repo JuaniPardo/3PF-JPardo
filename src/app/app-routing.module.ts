@@ -22,7 +22,7 @@ const routes: Routes = [
       loadChildren: () =>
          import('./core/components/dashboard/dashboard.module').then(m => m.DashboardModule)
    },
-   {path: '**', redirectTo: '', pathMatch: 'full'},
+   {path: '**', redirectTo: '/dashboard', pathMatch: 'full'},
 ];
 
 @NgModule({
